@@ -13,7 +13,8 @@ import {
   TableCell,
   TableBody,
   Paper,
-  Typography
+  Typography,
+  CssBaseline
 } from '@mui/material';
 import './App.css';
 
@@ -40,6 +41,7 @@ function App() {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
+        <CssBaseline />
         <Typography variant="h2" component="h2" marginBottom={2}>
           Martingale Calculator
         </Typography>
