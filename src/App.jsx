@@ -12,7 +12,8 @@ import {
   TableRow,
   TableCell,
   TableBody,
-  Paper
+  Paper,
+  Typography
 } from '@mui/material';
 import './App.css';
 
@@ -39,11 +40,15 @@ function App() {
   return (
     <>
       <ThemeProvider theme={darkTheme}>
-        <h1>Martingale Calculator</h1>
-        <p>Optimal Bet: {bet}</p>
-        <p>Number of Wins: {wins}</p>
+        <Typography variant="h2" component="h2" marginBottom={2}>
+          Martingale Calculator
+        </Typography>
+        <Typography variant="body1">Optimal Bet: {bet}</Typography>
+        <Typography variant="body1" marginBottom={2}>
+          Number of Wins: {wins}
+        </Typography>
         <div>
-          <Stack direction="column" spacing={2}>
+          <Stack direction="column" spacing={2} marginBottom={2}>
             <TextField
               id="bankroll"
               label="Bankroll"
@@ -133,7 +138,9 @@ function App() {
             </Stack>
           </Stack>
         </div>
-        <h1>Martingale Values</h1>
+        <Typography variant="h2" component="h2" marginBottom={2}>
+          Martingale Values
+        </Typography>
         <TableContainer component={Paper}>
           <Table>
             <TableHead>
