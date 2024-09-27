@@ -46,7 +46,7 @@ function App() {
   const [wins, setWins] = useState(0);
   const [increment, setIncrement] = useState(1);
 
-  const optimalBet = (bankroll, lives) => {
+  const optimalBet = () => {
     if (!isNumber(bankroll) || !isNumber(lives)) {
       return 'N/A';
     } else {
@@ -62,9 +62,7 @@ function App() {
         <Typography variant="h2" component="h2" marginBottom={2}>
           Calculator
         </Typography>
-        <Typography variant="body1">
-          Optimal Bet: {optimalBet(bankroll, lives)}
-        </Typography>
+        <Typography variant="body1">Optimal Bet: {optimalBet()}</Typography>
         <Typography variant="body1" marginBottom={2}>
           Number of Wins: {wins}
         </Typography>
@@ -128,9 +126,7 @@ function App() {
                   if (!isNumber(bankroll) || !isNumber(lives)) {
                     return;
                   }
-                  setBankroll(
-                    parseFloat(bankroll) + optimalBet(bankroll, lives)
-                  );
+                  setBankroll(parseFloat(bankroll) + optimalBet());
                   setWins(wins + 1);
                 }}
               >
