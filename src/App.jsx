@@ -117,7 +117,7 @@ function App() {
               </Select>
             </FormControl>
           </Stack>
-          <Stack direction="row" spacing={4}>
+          <Stack direction="row" spacing={4} alignItems="center">
             <Typography id="lives-label" align="left">
               Lives
             </Typography>
