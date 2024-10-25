@@ -102,6 +102,20 @@ function App() {
                 <MenuItem value={100}>100</MenuItem>
               </Select>
             </FormControl>
+            <FormControl fullWidth sx={{ width: '100%' }}>
+              <InputLabel id="win-odds-label">Win Odds</InputLabel>
+              <Select
+                labelId="win-odds-label"
+                id="win-odds"
+                value={winOdds}
+                label="Win Odds"
+                onChange={(event) => setWinOdds(event.target.value)}
+                align="left"
+              >
+                <MenuItem value={18 / 37}>18/37</MenuItem>
+                <MenuItem value={18 / 38}>18/38</MenuItem>
+              </Select>
+            </FormControl>
           </Stack>
           <Stack direction="row" spacing={4}>
             <Typography id="lives-label" align="left">
@@ -128,6 +142,7 @@ function App() {
                 <TableRow>
                   <TableCell>Lives</TableCell>
                   <TableCell align="right">Optimal Bet</TableCell>
+                  <TableCell align="right">Chance of Loss</TableCell>
                 </TableRow>
               </TableHead>
               <TableBody>
@@ -135,12 +150,23 @@ function App() {
                   <TableRow key={n}>
                     <TableCell>{n}</TableCell>
                     <TableCell align="right">{optimalBet(n)}</TableCell>
+                    <TableCell align="right">
+                      {((1 - winOdds) ** n * 100).toFixed(3) + '%'}
+                    </TableCell>
                   </TableRow>
                 ))}
               </TableBody>
             </Table>
           </TableContainer>
-          <Stack direction="row" spacing={2} justifyContent="end">
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="end"
+            alignItems="center"
+          >
+            <Typography variant="body1" align="right">
+              +{optimalBet(lives)}
+            </Typography>
             <Button
               variant="contained"
               id="calculate"
@@ -158,44 +184,28 @@ function App() {
         <Typography variant="h2" component="h2" marginBottom={2}>
           Values
         </Typography>
-        <Stack direction="column" spacing={2}>
-          <FormControl fullWidth sx={{ width: '100%' }}>
-            <InputLabel id="win-odds-label">Win Odds</InputLabel>
-            <Select
-              labelId="win-odds-label"
-              id="win-odds"
-              value={winOdds}
-              label="Win Odds"
-              onChange={(event) => setWinOdds(event.target.value)}
-              align="left"
-            >
-              <MenuItem value={18 / 37}>18/37</MenuItem>
-              <MenuItem value={18 / 38}>18/38</MenuItem>
-            </Select>
-          </FormControl>
-          <TableContainer component={Paper}>
-            <Table>
-              <TableHead>
-                <TableRow>
-                  <TableCell>Lives</TableCell>
-                  <TableCell align="right">Bankroll Divisor</TableCell>
-                  <TableCell align="right">Chance of Loss</TableCell>
+        <TableContainer component={Paper}>
+          <Table>
+            <TableHead>
+              <TableRow>
+                <TableCell>Lives</TableCell>
+                <TableCell align="right">Bankroll Divisor</TableCell>
+                <TableCell align="right">Chance of Loss</TableCell>
+              </TableRow>
+            </TableHead>
+            <TableBody>
+              {rows.map((row) => (
+                <TableRow key={row.lives}>
+                  <TableCell>{row.lives}</TableCell>
+                  <TableCell align="right">{row.value}</TableCell>
+                  <TableCell align="right">
+                    {((1 - winOdds) ** row.lives * 100).toFixed(3) + '%'}
+                  </TableCell>
                 </TableRow>
-              </TableHead>
-              <TableBody>
-                {rows.map((row) => (
-                  <TableRow key={row.lives}>
-                    <TableCell>{row.lives}</TableCell>
-                    <TableCell align="right">{row.value}</TableCell>
-                    <TableCell align="right">
-                      {((1 - winOdds) ** row.lives * 100).toFixed(3) + '%'}
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </TableContainer>
-        </Stack>
+              ))}
+            </TableBody>
+          </Table>
+        </TableContainer>
       </ThemeProvider>
     </>
   );
