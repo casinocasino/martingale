@@ -103,17 +103,18 @@ function App() {
               </Select>
             </FormControl>
             <FormControl fullWidth sx={{ width: '100%' }}>
-              <InputLabel id="win-odds-label">Win Odds</InputLabel>
+              <InputLabel id="win-odds-label">Game</InputLabel>
               <Select
                 labelId="win-odds-label"
                 id="win-odds"
                 value={winOdds}
-                label="Win Odds"
+                label="Game"
                 onChange={(event) => setWinOdds(event.target.value)}
                 align="left"
               >
-                <MenuItem value={18 / 37}>18/37</MenuItem>
-                <MenuItem value={18 / 38}>18/38</MenuItem>
+                <MenuItem value={18 / 37}>single zero roulette</MenuItem>
+                <MenuItem value={18 / 38}>double zero roulette</MenuItem>
+                <MenuItem value={0.493}>baccarat player bet</MenuItem>
               </Select>
             </FormControl>
           </Stack>
@@ -135,6 +136,28 @@ function App() {
               max={12}
               aria-labelledby="lives-label"
             />
+          </Stack>
+          <Stack
+            direction="row"
+            spacing={2}
+            justifyContent="end"
+            alignItems="center"
+          >
+            <Typography variant="body1" align="right">
+              +{optimalBet(lives)}
+            </Typography>
+            <Button
+              variant="contained"
+              id="calculate"
+              onClick={() => {
+                if (!isNumber(bankroll) || !isNumber(lives)) {
+                  return;
+                }
+                setBankroll(parseFloat(bankroll) + optimalBet(lives));
+              }}
+            >
+              Next Bet
+            </Button>
           </Stack>
           <TableContainer component={Paper}>
             <Table>
@@ -158,28 +181,6 @@ function App() {
               </TableBody>
             </Table>
           </TableContainer>
-          <Stack
-            direction="row"
-            spacing={2}
-            justifyContent="end"
-            alignItems="center"
-          >
-            <Typography variant="body1" align="right">
-              +{optimalBet(lives)}
-            </Typography>
-            <Button
-              variant="contained"
-              id="calculate"
-              onClick={() => {
-                if (!isNumber(bankroll) || !isNumber(lives)) {
-                  return;
-                }
-                setBankroll(parseFloat(bankroll) + optimalBet(lives));
-              }}
-            >
-              Next Bet
-            </Button>
-          </Stack>
         </Stack>
         <Typography variant="h2" component="h2" marginBottom={2}>
           Values
